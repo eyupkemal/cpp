@@ -8,5 +8,5 @@ int main(int ac,char** av)
         std::string level(av[1]);
         True.complain(level);
     }
-
+    return(0);
 }
