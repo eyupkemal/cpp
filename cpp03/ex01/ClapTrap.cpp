@@ -11,21 +11,19 @@ void ClapTrap::setHp(int hp){this->HtPoint = hp;}
 void ClapTrap::setAD(int ad){this->AtD = ad;}
 
 ClapTrap::ClapTrap(std::string _Name) : Name(_Name) ,HtPoint(10) ,EnP(10), AtD(0){
-    std::cout << "constructer called" << std::endl;
+   std::cout << " ClapTrap constructer Called" << std::endl;
 }
 
-ClapTrap::~ClapTrap()
-{
-    std::cout << "Destructer Called" << std::endl;
+ClapTrap::~ClapTrap(){
+    std::cout << " ClapTrapDestructer Called" << std::endl;
 }
 
-ClapTrap::ClapTrap()
-{
-    std::cout << "Default constructer called" << std::endl;
+ClapTrap::ClapTrap(){
+    std::cout << " ClapTrap Default constructer called" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &copy){
-    std::cout << "Copy constructer called" << std::endl;
+    std::cout << "ClapTrap Copy constructer called" << std::endl;
     *this = copy;
 }
 
@@ -43,7 +41,7 @@ void ClapTrap::attack(const std::string& target){
         std::cout << this->Name << "'s energy point and hit point run out!!" << std::endl;
         return ;
     }
-    std::cout<< "Claptrap "<< this->Name << " attack"  "(" << this->HtPoint << ") attacks " << target << ", causing " << this->AtD << " points of damage!" << std::endl;
+    std::cout<< "Claptrap "<< this->Name << " attack"  "(" << this->getHp() << ") attacks " << target << ", causing " << this->AtD << " points of damage!" << std::endl;
     this->EnP--;
 }
 
@@ -66,9 +64,9 @@ void ClapTrap::takeDamage(unsigned int amount){
         this->HtPoint = 0;
         return ;
     }
-    std::cout << "ClapTrap " << this->Name << "(" << this->HtPoint << ") takes " << amount << " points of damage!!" << std::endl;
+    std::cout << " ClapTrap " << this->Name << "(" << this->HtPoint << ") takes " << amount << " points of damage!!" << std::endl;
     this->HtPoint -= amount;
-    this->EnP--;      
+    this->EnP--;
 }
 std::ostream&   operator<<(std::ostream& o, ClapTrap& c) {
 	o << " Name: " << c.getName() << " HP: " << c.getHp() << " Stamina: " << c.getEp() << " AD: " << c.getAD();
