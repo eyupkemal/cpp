@@ -27,6 +27,11 @@ Animal& Animal::operator=(const Animal &a){
     return *this;;
 }
 
+std::ostream&   o(std::ostream& o, Animal& c) {
+    o<<" Name: ";
+    return o;
+}
+
 void Animal::makeSound() const{
     std::cout<< "ANİMAL SOUND "<< std::endl;
 }

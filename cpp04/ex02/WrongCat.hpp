@@ -14,4 +14,3 @@ class WrongCat : public WrongAnimal{
     WrongCat(const WrongCat &copy);
     void makeSound()const ;
 };
-

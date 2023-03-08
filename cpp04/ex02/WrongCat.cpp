@@ -19,7 +19,6 @@ WrongCat& WrongCat::operator=(const WrongCat &a){
 }
 
 
-
 void WrongCat::makeSound()const {
     std::cout<< this->getType() << ": Wrong cat sound" << std::endl;
 }

@@ -28,7 +28,6 @@ WrongAnimal& WrongAnimal::operator=(const WrongAnimal &a){
 }
 
 
-
 void WrongAnimal::makeSound() const{
     std::cout<< "Wrong animal sound"<< std::endl;
 }

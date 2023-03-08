@@ -15,3 +15,4 @@ class WrongAnimal{
     void makeSound()const;
     void set_type(std::string);
 };
+
