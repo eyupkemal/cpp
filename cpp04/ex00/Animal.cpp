@@ -8,7 +8,7 @@ Animal::~Animal(){
    std::cout <<"Animal Default destructer" << std::endl;
 }
 Animal::Animal(std::string _type){
-    std::cout <<"Animal Default constructor" << std::endl;
+    std::cout <<"Animal string constructor" << std::endl;
     set_type(_type);
 }
 std::string Animal::getType()const {
