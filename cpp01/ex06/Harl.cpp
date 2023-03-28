@@ -25,10 +25,9 @@ void Harl::complain(std::string level)
 {
     std::string a[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     int i = 0;
-    for (i = 0; i < 4; i++)
+    for (; level.compare(a[i]) && i < 4; i++)
     {
-        if (!level.compare(a[i]))
-            break;
+        ;
     }
     switch (i)
     {

@@ -8,6 +8,5 @@ Zombie* zombieHorde( int N, std::string name)
             Z[i].setName(name);
             i++;
     }
-    system("leaks zombieHr");
     return(Z);
 }

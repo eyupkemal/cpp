@@ -17,6 +17,8 @@ public:
     void announce( void );
     std::string getName(void);
     void setName(std::string);
+    Zombie(std::string _name);
+    ~Zombie();
 };
 Zombie* newZombie( std::string name );
 void randomChump( std::string name );

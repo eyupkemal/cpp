@@ -20,6 +20,7 @@ void Harl::error (void)
 void Harl::complain(std::string level)
 {
     Harl b;
+    int i = 0;
     void (Harl::*function[4])(void) =
 	{
 		&Harl::debug,
@@ -27,10 +28,10 @@ void Harl::complain(std::string level)
 		&Harl::warning,
 		&Harl::error
 	};
-    std::string a[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-    for (int i = 0; i < 4; i++)
+    std::string str[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+    for (;level.compare(str[i]) && i < 4; i++)
     {
-        if (!level.compare(a[i]))
-            (b.*function[i])();
+
     }
+    return((i == 4) ? (void)(NULL) : (b.*function[i])());
 }

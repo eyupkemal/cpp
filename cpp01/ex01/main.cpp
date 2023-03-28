@@ -3,12 +3,11 @@
 int main()
 {
     int n = 5;
-    Zombie* zombie = zombieHorde(5,"zombir");
+    Zombie* zombie = zombieHorde(5,"ZOMBİE");
     while(n--)
     {
         zombie[n].announce();
     }
     delete[] zombie;
-    system("leaks zombieHr");
     return(0);
 }
