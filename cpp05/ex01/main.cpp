@@ -1,3 +1,4 @@
+#include "Bureaucrat.hpp"
 #include "Form.hpp"
 
 int main(void)
@@ -7,7 +8,7 @@ int main(void)
 
 	try
 	{
-		std::cout << red << "=========Test 1=========" << white << std::endl;
+		std::cout << "=========Test 1=========" << std::endl;
 		Form f1("f1", 51, 70);
 		Form f2("f2", 100, 151);
 
@@ -24,7 +25,7 @@ int main(void)
 
 	try
 	{
-		std::cout << red << "=========Test 2=========" << white << std::endl;
+		std::cout << "=========Test 2=========" << std::endl;
 		Form f3("f3", 50, 30);
 		Form f4 = f3;
 		f3.beSigned(b1);
@@ -46,7 +47,7 @@ int main(void)
 
 	try
 	{
-		std::cout << red << "=========Test 3=========" << white << std::endl;
+		std::cout << "=========Test 2=========" << std::endl;
 		Form f5("f5", 50, 11);
 		f5.beSigned(b2);
 

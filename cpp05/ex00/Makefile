@@ -1,17 +1,19 @@
-NAME = hello
-CC = g++ 
+NAME = bureaucrat
+CC = g++
+FLAG = -Wall -Wextra -Werror -std=c++98
 SOURCE = $(wildcard *.cpp)
 OBJECT = $(patsubst %.cpp, %.o, $(SOURCE))
-FLAG = -Wall -Wextra -Werror -std=c++98
 
-all: $(OBJECT)
+all: $(NAME)
+
+$(NAME): $(OBJECT)
 	$(CC) $(FLAG) $(OBJECT) -o $(NAME)
-	$(MAKE) clean
-
-clean:
 	rm -rf $(OBJECT)
 
 fclean: clean
 	rm -rf $(NAME)
+
+clean:
+	rm -rf
 
 re: fclean all

@@ -1,61 +1,76 @@
 #include "Form.hpp"
-#include "Bureaucrat.hpp"
-int         Form::getBeGrade(void){return(this->beGrade);}
-std::string Form::getName(void){return(this->name);}
-int         Form::getPaperGrade(void){return(this->PaperGrade);}
-bool        Form::get_isSigned(){return this->signature;}
 
-void        Form::setBeGrade(int _beGrade){const_cast<int&>(this->beGrade) = _beGrade;}
-void        Form::setPaperGrade(int _grade){const_cast<int&>(this->beGrade) = _grade;}
-void        Form::setName(std::string _name){const_cast<std::string&>(this->name) = _name;};
-void        Form::setSigned(bool i){this->signature = i;}
-
-Form::Form(std::string _name,int _BeGrade,int _PaperGrade) : beGrade(_BeGrade) , PaperGrade(_PaperGrade){
-    std::cout << green << "Form constructor" << white << std::endl;
-    setName(_name);
-    if(getBeGrade() < 1 || getPaperGrade() <1)
-        throw GradeTooHighException();
-    else if(getBeGrade() >150 || getPaperGrade() > 150)
-        throw GradeTooLowException();
-}
-Form::~Form(){
-        std::cout << red << "Form destuructor" << white << std::endl;
+Form::Form(std::string _name, int _mustGrade, int _mustExecute): isSigned(0), mustGrade(_mustGrade), mustExecute(_mustExecute) {
+		this->setmustGrade(_mustGrade);
+		this->setmustExecute(_mustExecute);
+	this->setName(_name);
+	std::cout << green << "Form constructor" << white << std::endl;
 }
 
-void Form::beSigned(Bureaucrat& B){
-        if (B.getGrade() > getPaperGrade())
-                throw Form::NotEnoughToSign();
-        else
-            std::cout << this->getName() << ", signed from " << B.getName() << std::endl;
-        signature = 1;
-
+Form::Form(Form& c): isSigned(c.getSigned()), mustGrade(c.getmustGrade()), mustExecute(c.getmustExecute()) {
+	std::cout << green << "Form copy constructor" << white << std::endl;
 }
 
-Form& Form::operator=(Form person)
-{
-        setPaperGrade(person.getPaperGrade());
-        setBeGrade(person.getBeGrade());
-        setName(person.getName());
-        person.signature = signature;
-        return(*this);
+Form::~Form() {
+	std::cout << red << "Form Deconstructor Called" << white << std::endl;
+}
+
+Form& Form::operator=(Form& c) {
+	this->setName(c.getName());
+	this->setisSigned(c.getSigned());
+	this->setmustGrade(c.getmustGrade());
+	this->setmustExecute(c.getmustExecute());
+	return *this;
+}
+
+void	Form::beSigned(Bureaucrat& c) {
+	if (c.getGrade() > this->getmustGrade()) {
+		throw GradeTooLowException();
+	} else {
+		std::cout << this->getName() << ", signed from " << c.getName() << std::endl;
+	}
+}
+
+const std::string	Form::getName() const {return this->name;}
+const bool			Form::getSigned() const {return this->isSigned;}
+const int			Form::getmustGrade() const {return this->mustGrade;}
+const int			Form::getmustExecute() const {return this->mustExecute;}
+
+void	Form::setName(std::string nameTmp) { const_cast<std::string&>(this->name) = const_cast<std::string&>(nameTmp); }
+void	Form::setisSigned(bool signedTmp) { this->isSigned = signedTmp; }
+
+void	Form::setmustGrade(const int mustGradeTmp) {
+	if (mustGradeTmp > 150) {
+		throw GradeTooLowException();
+	} else if (mustGradeTmp < 1) {
+		throw GradeTooHightException();
+	} else {
+		const_cast<int&>(this->mustGrade) = const_cast<int&>(mustGradeTmp);
+	}
+}
+
+void	Form::setmustExecute(int mustExecuteTmp) {
+	if (mustExecuteTmp > 150) {
+		throw GradeTooLowException();
+	} else if (mustExecuteTmp < 1) {
+		throw GradeTooHightException();
+	} else {
+		const_cast<int&>(this->mustExecute) = const_cast<int&>(mustExecuteTmp);
+	}
+}
+
+const char *Form::GradeTooLowException::what() const throw() {
+	return "Grade must be bigger than";
+}
+
+const char *Form::GradeTooHightException::what() const throw() {
+	return "Grade must be lower than";
 }
 
 std::ostream&	operator<<(std::ostream& o, Form& n) {
-        o << "name " << n.getName()
-        << " signed " << n.get_isSigned()
-        << " Grade " << n.getBeGrade()
-        << " Execute " << n.getPaperGrade();
-        return o;
-}
-
-const char * Form::NotEnoughToSign::what() const throw(){
-        return("NotEnoughToSign");
-}
-
-const char * Form::GradeTooHighException::what() const throw(){
-        return("GradeTooHighException");
-}
-
-const char * Form::GradeTooLowException::what() const throw(){
-        return("GradeTooLowException");
+	o << "name " << n.getName()
+	<< " signed " << n.getSigned()
+	<< " Grade " << n.getmustGrade()
+	<< " Execute " << n.getmustExecute();
+	return o;
 }

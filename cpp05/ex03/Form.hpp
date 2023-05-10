@@ -1,43 +1,50 @@
 #pragma once
+
+#include <string>
 #include <iostream>
 #include "Bureaucrat.hpp"
+
+#define green "\033[1;32m"
+#define red "\033[1;31m"
+#define white "\033[0m"
+
 class Bureaucrat;
 
-class Form{
-    private:
+class Form {
+private:
+	const std::string	name;
+	bool        		isSigned;
+	const int   		mustGrade;
+	const int			mustExecute;
+public:
+	Form();
+	Form(std::string _name, int _mustGrade, int _mustExecute);
+	Form(Form& c);
+	virtual ~Form();
 
-    const std::string name;//adı
-    bool              signature;//kagıt imzalandı mı
-    const int         PaperGrade;//kagıdın leveli
-    const int         beGrade;//imzalayanın  grade
+	Form& operator=(Form& c);
 
-    public:
+	void	beSigned(Bureaucrat& c);
+	virtual void	execute(const Bureaucrat& executer) const = 0;
 
-    Form(std::string _name,int _BeGrade,int _PaperGrade);
-    ~Form();
+	const std::string	getName() const;
+	const bool       	getSigned() const;
+	const int			getmustGrade() const;
+	const int			getmustExecute() const;
 
-    Form&       operator=(Form person);
-    bool        get_isSigned();
-    int         getPaperGrade(void);
-    int         getBeGrade(void);
-    std::string getName(void);
-    
-    void        setSigned(bool);
-    void        setPaperGrade(int);
-    void        setBeGrade(int);
-    void        setName(std::string);
+	void setName(std::string nameTmp);
+	void setisSigned(bool signedTmp);
+	void setmustGrade(const int mustGradeTmp);
+	void setmustExecute(const int mustExecuteTmp);
 
-    void        beSigned(Bureaucrat& B);
-
-    class GradeTooHighException : public std::exception{
-        virtual const char * what() const throw();
-    };
-    class GradeTooLowException : public std::exception{//bu olayı anlamdım awq
-        virtual const char * what() const throw();
-    };
-    class NotEnoughToSign : public std::exception{
-        virtual const char * what() const throw();
-    };
+	class GradeTooLowException : public std::exception {
+		public:
+			virtual const char *what() const throw();
+	};
+	class GradeTooHightException : public std::exception {
+		public:
+			virtual const char *what() const throw();
+	};
 };
 
-std::ostream& operator<<(std::ostream &o, Form& F);
+std::ostream& operator<<(std::ostream& o, Form& n);

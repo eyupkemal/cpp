@@ -1,81 +1,64 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
-#include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(std::string name, int grade){
-	std::cout << "Bureaucrat  Constructor Called" << std::endl;
-    setName(name);
-    setGrade(grade);
+Bureaucrat::Bureaucrat(const std::string _name, int _grade): name(_name) {
+	std::cout << green << "Bureaucrat constructor called" << white << std::endl;
+	this->setGrade(_grade);
 }
 
-Bureaucrat::Bureaucrat() : _name("kemal"), _grade(1)
-{
-	std::cout << "Bureaucrat Default Constructor Called" << std::endl;
+Bureaucrat::Bureaucrat(const Bureaucrat& _copy) {
+	*this = _copy;
+	std::cout << green << "Bureaucrat constructor called" << white << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& Bureaucrat_Copy) : _name(Bureaucrat_Copy._name), _grade(Bureaucrat_Copy._grade)
-{
-	std::cout << "Bureaucrat Copy Constructor Called" << std::endl;
+const Bureaucrat& Bureaucrat::operator=(const Bureaucrat& _copy) {
+	this->setGrade(_copy.getGrade());
+	this->setName(_copy.getName());
+	return *this;
 }
 
-Bureaucrat& Bureaucrat::operator=(Bureaucrat person)
-{
-    setGrade(person._grade);
-    setName(person._name);
-    return(*this);
+void	Bureaucrat::increment(void) {
+	this->setGrade(this->getGrade() - 1);
+}
+void	Bureaucrat::decrement(void) {
+	this->setGrade(this->getGrade() + 1);
 }
 
-std::string Bureaucrat::getName()const {
-    return(this->_name);
+Bureaucrat::~Bureaucrat() { std::cout << red << "Bureaucrat deconstructor" << white << std::endl;}
+
+void	Bureaucrat::signForm(Form& c) {
+	if (c.getmustGrade() < this->getGrade()) {
+		std::cout << this->getName() << " couldn't sign " << c.getName() << " because " << std::endl;
+		throw GradeTooLowException();
+	} else {
+		c.setisSigned(1);
+		std::cout << this->getName() << " signed " << c.getName() << std::endl;
+	}
 }
 
-int Bureaucrat::getGrade(void)            const {return(this->_grade);}
-void Bureaucrat::setName(std::string name){const_cast<std::string&>(this->_name) = name;}//type_cast yaptıktık burada const birşehyi const olmayan birşeye set ederken hatra verir eşittir operatörü
-
-void Bureaucrat::setGrade(int grade){
-    if(grade < 1)
-        throw GradeTooHighException();
-    else if(grade >150)
-        throw GradeTooLowException();
-    else
-        this->_grade = grade;
+const	std::string Bureaucrat::getName(void) const { return(this->name); }
+void	Bureaucrat::setName(std::string _n) { const_cast<std::string&>(this->name) = const_cast<std::string&>(_n); }
+int		Bureaucrat::getGrade(void) const { return(this->grade); }
+void	Bureaucrat::setGrade(int _grade) {
+	if (_grade > 150) {
+		this->grade = 0;
+		throw GradeTooLowException();
+	} else if (_grade < 1) {
+		this->grade = 0;
+		throw GradeTooHighException();
+	} else {
+		this->grade = _grade;
+	}
 }
 
-Bureaucrat::~Bureaucrat(){
-    std::cout << "destructor called"<<std::endl;
-}
-
-void  Bureaucrat::incrementGrade()
-{
-	if(_grade - 1 < 1)
-		throw Bureaucrat::GradeTooHighException();
-	_grade--;
-}
-
-void Bureaucrat::decrementGrade()
-{
-	if(_grade + 1 > 150)
-		throw Bureaucrat::GradeTooLowException();
-	_grade++;
-}
-
-void Bureaucrat::signForm(Form& F) const
-{
-	if (F.get_isSigned())
-		std::cout << getName() << " signed " << F.getName() << std::endl;
-	else if(getGrade() > F.get_isSigned())
-		std::cout << getName() << " couldn’t sign " << F.getName() << " because grade is too low" << std::endl;
-}
-
-const char * Bureaucrat::GradeTooHighException::what()const throw(){
-    return("grade cannot be tower than 1");
-}
-
-const char * Bureaucrat::GradeTooLowException::what()const throw(){
-    return("grade cannot be lower than 150");
-}
-
-std::ostream&   operator<<(std::ostream& o, Bureaucrat& b) {
-	o << b.getName() << ", grade level is " << b.getGrade()<<std::endl;
+std::ostream&   operator<<(std::ostream& o, const Bureaucrat& b) {
+	o << b.getName() << ", grade level is " << b.getGrade();
 	return (o);
+}
+
+const char *Bureaucrat::GradeTooHighException::what() const throw() {
+	return "Grade is must be lower than";
+}
+
+const char *Bureaucrat::GradeTooLowException::what() const throw() {
+	return "Grade is must be bigger than";
 }

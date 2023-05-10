@@ -1,26 +1,22 @@
 #include "Bureaucrat.hpp"
 
-/* int main(){
-    Bureaucrat a("ahmet",151);
-    Bureaucrat c("mehmet",11);
-    std::cout <<c;
-} */
-
-
 int main(void)
 {
 	Bureaucrat b1("b1", 150);
 	Bureaucrat b2("b2", 1);
 	Bureaucrat b3("b3", 10);
 	Bureaucrat b4(b3);
-
 	b4 = b2;
 
 	std::cout << std::endl;
-
+	
 	try
 	{
 		Bureaucrat b6("b6", 155);
+
+
+
+		
 	}
 	catch(const std::exception& e)
 	{
@@ -48,7 +44,7 @@ int main(void)
 	{
 
 		std::cout << "************TEST1***********" << std::endl;
-		b1.decrementGrade();
+		b1.decrement();
 
 		std::cout << b1 << std::endl;
 
@@ -63,20 +59,20 @@ int main(void)
 	try
 	{
 		std::cout << "***********TEST2************" << std::endl;
-		b2.incrementGrade();
+		b2.increment();
 		std::cout << b2 << std::endl;
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-
+	
 	std::cout << std::endl;
 
 	try
 	{
 		std::cout << "************TEST3***********" << std::endl;
-		b3.incrementGrade();
+		b3.increment();
 		std::cout << b3 << std::endl;
 	}
 	catch(const std::exception& e)
@@ -89,7 +85,7 @@ int main(void)
 	try
 	{
 		std::cout << "************TEST4***********" << std::endl;
-		b4.decrementGrade();
+		b4.decrement();
 		std::cout << b4 << std::endl;
 	}
 	catch(const std::exception& e)

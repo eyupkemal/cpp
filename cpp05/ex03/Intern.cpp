@@ -1,43 +1,44 @@
 #include "Intern.hpp"
+#include <algorithm>
 
-Intern::Intern()
-{
-	std::cout << "Intern Default Constructor Called" << std::endl;
-}
-	
-Intern::Intern(const Intern& I)
-{
-	(void)I;
-	std::cout << "Intern Copy Constructor Called" << std::endl;
+Intern::Intern() {
+	std::cout << green << "The slave has been created" << white << std::endl;
 }
 
-Intern& Intern::operator=(const Intern& I)
-{
-	(void)I;
-	std::cout << "Intern Assignment Operator Called" << std::endl;
+Intern::Intern(Intern& c) {
+	*this = c;
+}
+
+Intern& Intern::operator=(Intern& c) {
+	std::cout << "assaingment" << green << "operator" << white << "called" << std::endl;
 	return *this;
 }
 
-Intern::~Intern()
-{
-	std::cout << "Intern Destructor Called" << std::endl;
+Intern::~Intern() {
+	std::cout << red << "The slave need a break" << white << std::endl;
 }
 
-
-AForm* Intern::makeForm(std::string name, std::string target)
-{
+Form*  Intern::makeForm(std::string s1, std::string s2) {
+	std::string name[3] = {"PresidentialPardonForm", "RobotomyRequesdfstForm", "ShrubberyCreationForm"};
 	int i = 0;
-	std::string forms[3] = {"robotomy request", "presidential pardon", "shrubbery creation"};
-
-	std::cout << "Intern creates " << name << std::endl;
-	while(name != forms[i] && i < 3)
-		i++;
+	for (; name[i].find(s1) && i < 3;i ++) {
+		;
+	}
+	std::cout << i << std::endl;
 	switch (i)
 	{
-		case 0: return new RobotomyRequestForm(target);
-		case 1: return new PresidentialPardonForm(target);
-		case 2: return new ShrubberyCreationForm(target);
+		case 0:
+			return new PresidentialPardonForm(s2);
+		case 1:
+			return new RobotomyRequestForm(s2);
+		case 2:
+			return new ShrubberyCreationForm(s2);
+		default:
+			throw FormNotFound();
 	}
-	std::cout << "There is no form with this name." << std::endl;
-	return (NULL);
+	return NULL;
+}
+
+const char *Intern::FormNotFound::what() const throw() {
+	return "Form can not created";
 }

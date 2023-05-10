@@ -1,45 +1,38 @@
 #include "RobotomyRequestForm.hpp"
 
-RobotomyRequestForm::RobotomyRequestForm() : AForm()
-{
-	std::cout << "RobotomyRequestForm Default Constructor Called" << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(std::string _target): target(_target) {
+    this->setName("RobotomyRequestForm");
+    this->setmustGrade(72);
+    this->setmustExecute(45);
+    std::cout << green << "Robotomy default const called" << white << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm(target, 45, 72), target(target)
-{
-	std::cout << "RobotomyRequestForm Parameter Constructor Called" << std::endl;
-}
-	
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& R_Copy) : AForm(R_Copy)
-{
-	std::cout << "RobotomyRequestForm Copy Constructor Called" << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm& c) {
+    *this = c;
+    std::cout << green << "Robotomy copy const called" << white << std::endl;
 }
 
-RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& R)
-{
-	std::cout << "RobotomyRequestForm Assignment Operator Called" << std::endl;
-	AForm::operator=(R);
-	return *this;
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& c) {
+    this->setisSigned(c.getSigned());
+    this->setmustExecute(c.getmustExecute());
+    this->setmustGrade(c.getmustGrade());
+    this->setName(c.getName());
+    return *this;
 }
 
-RobotomyRequestForm::~RobotomyRequestForm()
-{
-	std::cout << "RobotomyRequestForm Destructor Called" << std::endl;
+RobotomyRequestForm::~RobotomyRequestForm() {
+    std::cout << red << "Robotomy deconst called" << white << std::endl;
 }
 
-void RobotomyRequestForm::execute(Bureaucrat const & executor) const
-{
-	if (!get_isSigned())
-		throw NotSignedException();
-	else if (executor.getGrade() > get_GradeExec())
-		throw NotEnoughToExecute();
-	else
-	{
-		srand(time(NULL));
-		std::cout << "\n**************(some drilling noises)********(Drrrrrrrrrrr!)**********\n" << std::endl;
-		if (rand() % 2)
-			std::cout << getName() << " has been robotomized successfully 50% of the time." << std::endl;
-		else
-			std::cout << getName() << " has been failed robotomize." << std::endl;
+void	RobotomyRequestForm::execute(const Bureaucrat& executer) const {
+	if (executer.getGrade() > this->getmustGrade() || executer.getGrade() > this->getmustExecute())
+		throw GradeTooLowException();
+	else if (this->getSigned() == false)
+		std::cout << "Form not signed" << std::endl;
+	else {
+		if (rand() % 2 == 0)
+            std::cout << this->target << " has been robotomized succesfully" << std::endl;
+        else
+            std::cout << this->target << " has been robotomized failed" << std::endl;
 	}
 }

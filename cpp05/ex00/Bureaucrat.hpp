@@ -1,39 +1,35 @@
-#pragma once 
+#pragma once
 
-#include <iostream>
 #include <string>
 #include <iostream>
 
-class Bureaucrat
-{
-private:
-    const std::string _name;
-    int               _grade;
+class Bureaucrat {
+protected:
+	const std::string name;
+	int grade;
 public:
-    Bureaucrat ();
-    Bureaucrat (std::string name,int grade);
-    ~Bureaucrat();
-    Bureaucrat (const Bureaucrat& Bureaucrat_Copy);
-    
-    Bureaucrat& operator=(Bureaucrat person);
-    
-    int         getGrade(void);
-    std::string getName(void);
-    
-    void        setGrade(int grade);
-    void        setName(std::string name);
-    
-    void        decrementGrade();
-    void        incrementGrade();
+	Bureaucrat(const std::string _name, int _grade);
+	Bureaucrat(const Bureaucrat& _copy);
+	const Bureaucrat& operator=(const Bureaucrat& _copy);
+	~Bureaucrat();
 
-	
+	const	std::string   getName(void) const;
+	void	setName(std::string _n) ;
+	int		getGrade(void) const;
+	void	setGrade(int _grade);
 
-    class GradeTooHighException : public std::exception{
-        virtual const char * what() const throw();
-    };
-    class GradeTooLowException : public std::exception{//bu olayı anlamdım awq
-        virtual const char * what() const throw();
-    };
+	void	increment(void); 
+	void	decrement(void);
+
+	class GradeTooLowException : public std::exception {
+		public:
+			virtual const char *what() const throw();
+	};
+
+	class GradeTooHighException : public std::exception {
+		public:
+			virtual const char *what() const throw();
+	};
 };
 
-std::ostream&   operator<<(std::ostream& o, Bureaucrat& b);
+std::ostream&   operator<<(std::ostream& o, const Bureaucrat& b);

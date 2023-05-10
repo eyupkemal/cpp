@@ -1,20 +1,20 @@
-#ifndef PRESIDENTIALPARDONFORM_HPP
-#define PRESIDENTIALPARDONFORM_HPP
+#pragma once
 
-#include "AForm.hpp"
+#include <string>
+#include <iostream>
+#include "Form.hpp"
 
-class PresidentialPardonForm : public AForm
-{
+class Form;
+
+class PresidentialPardonForm : public Form {
 private:
-	std::string target;
+	std::string	target;
 public:
+	void	execute(Bureaucrat const& executer) const ;
+
 	PresidentialPardonForm();
-	PresidentialPardonForm(std::string target);
-	PresidentialPardonForm(const PresidentialPardonForm& P_Copy);
-	PresidentialPardonForm& operator=(const PresidentialPardonForm& P);
+	PresidentialPardonForm(std::string _target);
+	PresidentialPardonForm(const PresidentialPardonForm& _copy);
+	const PresidentialPardonForm& operator=(const PresidentialPardonForm& _copy);
 	~PresidentialPardonForm();
-
-	void execute(Bureaucrat const & executor) const;
 };
-
-#endif

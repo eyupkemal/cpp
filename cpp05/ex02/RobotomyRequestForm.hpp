@@ -1,25 +1,16 @@
-
- 
-
-#ifndef ROBOTOMYREQUESTFORM_HPP
-#define ROBOTOMYREQUESTFORM_HPP
+#pragma once
 
 #include "AForm.hpp"
-#include <cstdlib> //rand(), srand()
-#include <ctime>//time()
+#include <cstdlib>
 
-class RobotomyRequestForm : public AForm
-{
+class RobotomyRequestForm : public AForm {
 private:
-	std::string target;
+    std::string target;
 public:
-	RobotomyRequestForm();
-	RobotomyRequestForm(std::string target);
-	RobotomyRequestForm(const RobotomyRequestForm& R_Copy);
-	RobotomyRequestForm& operator=(const RobotomyRequestForm& R);
-	~RobotomyRequestForm();
+    void    execute(const Bureaucrat& executer) const ;
 
-	void execute(Bureaucrat const & executor) const;
+    RobotomyRequestForm(std::string _target);
+    RobotomyRequestForm(RobotomyRequestForm& c);
+    RobotomyRequestForm& operator=(const RobotomyRequestForm& c);
+    ~RobotomyRequestForm();
 };
-
-#endif

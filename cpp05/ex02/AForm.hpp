@@ -1,71 +1,50 @@
-#ifndef AFORM_HPP
-#define AFORM_HPP
+#pragma once
 
+#include <string>
+#include <iostream>
 #include "Bureaucrat.hpp"
 
-class AForm
-{
-private:
-	std::string name;
-	bool isSigned;
-	const int grade_exec;
-	const int grade_sign;
+#define green "\033[1;32m"
+#define red "\033[1;31m"
+#define white "\033[0m"
 
+class Bureaucrat;
+
+class AForm {
+private:
+	const std::string	name;
+	bool        		isSigned;
+	const int   		mustGrade;
+	const int			mustExecute;
 public:
 	AForm();
-	AForm(const std::string name, const int grade_exec, const int grade_sign);
-	AForm(const AForm& Form_Copy);
-	AForm& operator=(const AForm& F_Copy);
+	AForm(std::string _name, int _mustGrade, int _mustExecute);
+	AForm(AForm& c);
 	virtual ~AForm();
 
-	void beSigned(Bureaucrat& B);
-	virtual void execute(Bureaucrat const & executor) const = 0;
+	AForm& operator=(AForm& c);
 
-	std::string getName() const;
-	bool get_isSigned() const;
-	int get_GradeSign() const;
-	int get_GradeExec() const;
+	void	beSigned(Bureaucrat& c);
+	virtual void	execute(const Bureaucrat& executer) const = 0;
 
-	class NotEnoughToSign : public std::exception
-	{
-	public:
-		NotEnoughToSign();
+	const std::string	getName() const;
+	const bool       	getSigned() const;
+	const int			getmustGrade() const;
+	const int			getmustExecute() const;
+
+	void setName(std::string nameTmp);
+	void setisSigned(bool signedTmp);
+	void setmustGrade(const int mustGradeTmp);
+	void setmustExecute(const int mustExecuteTmp);
+
+	class GradeTooLowException : public std::exception {
+		public:
+			virtual const char *what() const throw();
 	};
-
-	class NotEnoughToExecute : public std::exception
-	{
-	public:
-		NotEnoughToExecute();
+	class GradeTooHightException : public std::exception {
+		public:
+			virtual const char *what() const throw();
 	};
-
-	class NotSignedException : public std::exception
-	{
-	public :
-		NotSignedException();
-	};
-
-	class FileCreationException : public std::exception
-	{
-	public :
-		FileCreationException();
-	};
-
-	class GradeTooLowException : public std::exception
-	{
-	public:
-		GradeTooLowException();
-	};
-
-	class GradeTooHighException : public std::exception
-	{
-	public:
-		GradeTooHighException();
-	};
-
 };
 
-std::ostream& operator<<(std::ostream &o, const AForm& F);
-
-
-
-#endif
+std::ostream& operator<<(std::ostream& o, AForm& n);

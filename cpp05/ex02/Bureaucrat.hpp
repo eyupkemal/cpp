@@ -1,48 +1,48 @@
-#pragma once
-#include <iostream>
+#ifndef BUREAUCRAT_HPP
+#define BUREAUCRAT_HPP
+
 #include <string>
 #include <iostream>
-#include "Form.h"
-
+#include "AForm.hpp"
 
 #define green "\033[1;32m"
 #define red "\033[1;31m"
 #define white "\033[0m"
 
-
 class AForm;
 
-class Bureaucrat
-{
-private:
-    const std::string _name;
-    int               _grade;
+class Bureaucrat {
+protected:
+	const std::string name;
+	int grade;
 public:
-    Bureaucrat ();
-    Bureaucrat (std::string name,int grade);
-    ~Bureaucrat();
-    Bureaucrat (const Bureaucrat& Bureaucrat_Copy);
-    
-    Bureaucrat& operator=(Bureaucrat person);
-    
-    int         getGrade(void)const;
-    std::string getName(void)const;
-    
-    void        setGrade(int grade) ;
-    void        setName(std::string name);
-    
-    void        decrementGrade();
-    void        incrementGrade();
+	Bureaucrat(const std::string _name, int _grade);
+	Bureaucrat(const Bureaucrat& _copy);
+	const Bureaucrat& operator=(const Bureaucrat& _copy);
+	~Bureaucrat();
 
-	void signForm(const AForm& F) const;
-    void executeForm(AForm const & form);
+	void	signForm(AForm& c) const ;
+	void	executeForm(const AForm& form);
 
-    class GradeTooHighException : public std::exception{
-        virtual const char * what() const throw();
-    };
-    class GradeTooLowException : public std::exception{//bu olayı anlamdım awq
-        virtual const char * what() const throw();
-    };
+	const	std::string   getName(void) const;
+	void	setName(std::string _n) ;
+	int		getGrade(void) const;
+	void	setGrade(int _grade);
+
+	void	increment(void);
+	void	decrement(void);
+
+	class GradeTooLowException : public std::exception {
+		public:
+			virtual const char *what() const throw();
+	};
+
+	class GradeTooHighException : public std::exception {
+		public:
+			virtual const char *what() const throw();
+	};
 };
 
-std::ostream&   operator<<(std::ostream& o, Bureaucrat& b);
+std::ostream&   operator<<(std::ostream& o, const Bureaucrat& b);
+
+#endif
