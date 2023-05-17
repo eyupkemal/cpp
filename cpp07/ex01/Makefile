@@ -1,7 +1,7 @@
 SRCS = $(wildcard *.cpp)
 
 CC = clang++
-NAME = whatever
+NAME = iter
 
 CFLANG = -Wall -Wextra -Werror -std=c++98
 OBJS = $(SRCS:.cpp=.o)
