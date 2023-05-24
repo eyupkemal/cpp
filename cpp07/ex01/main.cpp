@@ -3,11 +3,11 @@
 void printstr(const std::string &str){
     std::cout << str << "   ";
 }
+
 void printnumber(const int &nbr)
 {
     std::cout << nbr << " ";
 }
-
 
 int main()
 {
